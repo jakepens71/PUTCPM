@@ -1,0 +1,279 @@
+<alfresco-config>
+<config>
+      <forms>
+         <dependencies>
+            <css src="/components/form/wfpennunited.css" />
+            <js src="/components/form/wfpennunited.js" />
+            <js src="/yui/event/event.js" />
+         </dependencies>
+      </forms>   
+   </config>
+   
+    <config evaluator="string-compare" condition="activiti$CPMpennUnitedOperationsWorkflowRevision2">
+      <forms>        
+         <form>
+            <field-visibility>
+               <show id="bpm:workflowDescription" />
+               <show id="bpm:workflowDueDate" />
+               <show id="bpm:workflowPriority" />
+               <show id="bpm:status" />
+               <show id="packageItems" />
+               <show id="bpm:sendEMailNotifications" />
+               <show id="bpm:comment" />
+               <show id="cpmwf:productCode" />
+            </field-visibility>
+            <appearance>
+               <set id="" appearance="title" label-id="workflow.set.task.info" />
+               <set id="info" appearance="" template="/org/alfresco/components/form/3-column-set.ftl" />
+               <set id="progress" appearance="title" label-id="workflow.set.task.progress" />
+               <set id="items" appearance="title" label-id="workflow.set.items" />
+               <set id="other" appearance="title" label-id="workflow.set.other" />
+               
+               <field id="bpm:workflowDescription" label-id="pennUnited.workflow.field.message" description-id="pennUnited.workflow.field.message"  mandatory="true">
+                  <control template="/org/alfresco/components/form/controls/textarea.ftl">
+                     <control-param name="style">width: 95%</control-param>
+                  </control>
+               </field>
+               <field id="bpm:workflowPriority" label-id="workflow.field.priority" set="info">
+                  <control template="/org/alfresco/components/form/controls/workflow/ftkpriority.ftl" />
+               </field>
+               <field id="bpm:workflowDueDate" set="info" label-id="workflow.field.due" />
+               <field id="bpm:status" set="progress" />
+               <field id="packageItems" set="items" />
+               <field id="bpm:sendEMailNotifications" set="other" />
+               <field id="bpm:comment" label-id="workflow.field.comment">
+                  <control template="/org/alfresco/components/form/controls/textarea.ftl" set="other">
+                     <control-param name="style">width: 95%</control-param>
+                  </control>
+               </field>
+
+               <field id="cpmwf:productCode" set="info"
+                      label-id="pennUnited.workflow.field.productCode"
+                      description-id="pennUnited.workflow.field.productCode">
+                   <control template="/org/alfresco/components/form/controls/selectone.ftl" />
+               </field>
+            </appearance>
+         </form>
+      </forms>
+   </config>
+   
+   <!-- For the WF's that I've Started Page -->
+   <config evaluator="task-type" condition="cpmwf:startCPMPennUnitedWF2">
+      <forms>
+         <form id="workflow-details">
+            <field-visibility>
+               <show id="bpm:sendEMailNotifications" />
+               <show id="packageItems" />
+            </field-visibility>
+            <appearance>
+               <set id="" appearance="title" label-id="workflow.set.workflow.more_info" />
+               <set id="items" appearance="title" label-id="workflow.set.items" />
+               <field id="packageItems" set="items" />
+            </appearance>
+         </form>
+      </forms>
+  </config>
+
+   
+   <config evaluator="task-type" condition="cpmwf:CPMOperationsResubmit">
+      <forms>
+         <form>
+            <field-visibility>
+               <show id="cpmwf:wfName" />
+               <show id="cpmwf:previousComment" />
+               <show id="taskOwner" />
+               <show id="bpm:priority" />
+               <show id="bpm:dueDate" />
+               <show id="bpm:taskId" />
+               <show id="bpm:status" />
+               <show id="packageItems" />
+               <show id="bpm:comment" />
+               <show id="cpmwf:CPMoperationsOutcome" />
+            </field-visibility>
+            <appearance>
+               <set id="" appearance="title" label-id="workflow.set.task.info" />
+               <set id="info" appearance="" template="/org/alfresco/components/form/3-column-set.ftl" />
+               <set id="progress" appearance="title" label-id="workflow.set.task.progress" />
+               <set id="items" appearance="title" label-id="workflow.set.items" />
+               <set id="response" appearance="title" label-id="workflow.set.response" />
+               
+               <field id="cpmwf:wfName" label-id="pennUnited.workflow.field.message" description-id="pennUnited.workflow.field.message">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="cpmwf:previousComment" label-id="pennUnited.workflow.field.prevcomment">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="taskOwner" set="info" />
+               <field id="bpm:taskId" set="info">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="bpm:priority" set="info" read-only="true">
+                  <control template="/org/alfresco/components/form/controls/workflow/ftkpriority.ftl" />
+               </field>
+               <field id="bpm:dueDate" set="info" label-id="workflow.field.due">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="bpm:status" set="progress" />
+               <field id="packageItems" set="items" />
+               <field id="bpm:comment" label-id="workflow.field.comment" set="response">
+                  <control template="/org/alfresco/components/form/controls/textarea.ftl">
+                     <control-param name="style">width: 95%</control-param>
+                  </control>
+               </field>
+               <field id="cpmwf:CPMoperationsOutcome" label-id="workflow.field.outcome" set="response">
+                  <control template="/org/alfresco/components/form/controls/workflow/activiti-transitions.ftl" />
+               </field>
+            </appearance>
+         </form>
+      </forms>
+   </config>
+   
+   <config evaluator="task-type" condition="cpmwf:CPMOrdermaterial">
+      <forms>
+         <form>
+            <field-visibility>
+               <show id="cpmwf:wfName" />
+               <show id="cpmwf:previousComment" />
+               <show id="taskOwner" />
+               <show id="bpm:priority" />
+               <show id="bpm:dueDate" />
+               <show id="bpm:status" />
+               <show id="packageItems" />
+               <show id="bpm:comment" />
+               <show id="cpmwf:CPMorderMaterialOutcome" />
+            </field-visibility>
+            <appearance>
+               <set id="" appearance="title" label-id="workflow.set.task.info" />
+               <set id="info" appearance="" template="/org/alfresco/components/form/3-column-set.ftl" />
+               <set id="progress" appearance="title" label-id="workflow.set.task.progress" />
+               <set id="items" appearance="title" label-id="workflow.set.items" />
+               <set id="response" appearance="title" label-id="workflow.set.response" />
+               
+               <field id="cpmwf:wfName" label-id="pennUnited.workflow.field.message" description-id="pennUnited.workflow.field.message">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="cpmwf:previousComment" label-id="pennUnited.workflow.field.prevcomment">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="taskOwner" set="info" />
+               <field id="bpm:priority" set="info" read-only="true">
+                  <control template="/org/alfresco/components/form/controls/workflow/ftkpriority.ftl" />
+               </field>
+               <field id="bpm:dueDate" set="info" label-id="workflow.field.due">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="bpm:status" set="progress" />
+               <field id="packageItems" set="items" />
+               <field id="bpm:comment" label-id="workflow.field.comment" set="response">
+                  <control template="/org/alfresco/components/form/controls/textarea.ftl">
+                     <control-param name="style">width: 95%</control-param>
+                  </control>
+               </field>
+               <field id="cpmwf:CPMorderMaterialOutcome" label-id="workflow.field.outcome" set="response">
+                  <control template="/org/alfresco/components/form/controls/workflow/activiti-transitions.ftl" />
+               </field>
+            </appearance>
+         </form>
+      </forms>
+   </config>
+   
+      
+   <config evaluator="task-type" condition="cpmwf:CPMPackingSlipCreation">
+      <forms>
+         <form>
+            <field-visibility>
+               <show id="cpmwf:wfName" />
+               <show id="cpmwf:previousComment" />
+               <show id="taskOwner" />
+               <show id="bpm:priority" />
+               <show id="bpm:dueDate" />
+               <show id="bpm:status" />
+               <show id="packageItems" />
+               <show id="bpm:comment" />
+               <show id="cpmwf:CPMpackingSlipCreationOutcome" />
+            </field-visibility>
+            <appearance>
+               <set id="" appearance="title" label-id="workflow.set.task.info" />
+               <set id="info" appearance="" template="/org/alfresco/components/form/3-column-set.ftl" />
+               <set id="progress" appearance="title" label-id="workflow.set.task.progress" />
+               <set id="items" appearance="title" label-id="workflow.set.items" />
+               <set id="response" appearance="title" label-id="workflow.set.response" />
+
+               <field id="cpmwf:wfName" label-id="pennUnited.workflow.field.message" description-id="pennUnited.workflow.field.message">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="cpmwf:previousComment" label-id="pennUnited.workflow.field.prevcomment">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="taskOwner" set="info" />
+               <field id="bpm:priority" set="info" read-only="true">
+                  <control template="/org/alfresco/components/form/controls/workflow/ftkpriority.ftl" />
+               </field>
+               <field id="bpm:dueDate" set="info" label-id="workflow.field.due">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="bpm:status" set="progress" />
+               <field id="packageItems" set="items" />
+               <field id="bpm:comment" label-id="workflow.field.comment" set="response">
+                  <control template="/org/alfresco/components/form/controls/textarea.ftl">
+                     <control-param name="style">width: 95%</control-param>
+                  </control>
+               </field>
+               <field id="cpmwf:CPMpackingSlipCreationOutcome" label-id="workflow.field.outcome" set="response">
+                  <control template="/org/alfresco/components/form/controls/workflow/activiti-transitions.ftl" />
+               </field>
+            </appearance>
+         </form>
+      </forms>
+   </config>   
+
+      <config evaluator="task-type" condition="cpmwf:CPMissueMaterial">
+      <forms>
+         <form>
+            <field-visibility>
+               <show id="cpmwf:wfName" />
+               <show id="cpmwf:previousComment" />
+               <show id="taskOwner" />
+               <show id="bpm:priority" />
+               <show id="bpm:dueDate" />
+               <show id="bpm:status" />
+               <show id="packageItems" />
+               <show id="bpm:comment" />
+               <show id="cpmwf:CPMissueMaterialOutcome" />
+            </field-visibility>
+            <appearance>
+               <set id="" appearance="title" label-id="workflow.set.task.info" />
+               <set id="info" appearance="" template="/org/alfresco/components/form/3-column-set.ftl" />
+               <set id="progress" appearance="title" label-id="workflow.set.task.progress" />
+               <set id="items" appearance="title" label-id="workflow.set.items" />
+               <set id="response" appearance="title" label-id="workflow.set.response" />
+
+               <field id="cpmwf:wfName" label-id="pennUnited.workflow.field.message" description-id="pennUnited.workflow.field.message">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="cpmwf:previousComment" label-id="pennUnited.workflow.field.prevcomment">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="taskOwner" set="info" />
+               <field id="bpm:priority" set="info" read-only="true">
+                  <control template="/org/alfresco/components/form/controls/workflow/ftkpriority.ftl" />
+               </field>
+               <field id="bpm:dueDate" set="info" label-id="workflow.field.due">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="bpm:status" set="progress" />
+               <field id="packageItems" set="items" />
+               <field id="bpm:comment" label-id="workflow.field.comment" set="response">
+                  <control template="/org/alfresco/components/form/controls/textarea.ftl">
+                     <control-param name="style">width: 95%</control-param>
+                  </control>
+               </field>
+               <field id="cpmwf:CPMissueMaterialOutcome" label-id="workflow.field.outcome" set="response">
+                  <control template="/org/alfresco/components/form/controls/workflow/activiti-transitions.ftl" />
+               </field>
+            </appearance>
+         </form>
+      </forms>
+   </config>      
+   
+</alfresco-config>

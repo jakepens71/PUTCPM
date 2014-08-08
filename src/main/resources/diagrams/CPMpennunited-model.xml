@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="putwf:workflowmodel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+    <!-- Imports are required to allow references to definitions in other models -->
+    <imports>
+        <import uri="http://www.alfresco.org/model/dictionary/1.0"
+            prefix="d" />
+        <import uri="http://www.alfresco.org/model/bpm/1.0"
+            prefix="bpm" />
+        <import uri="http://www.alfresco.org/model/workflow/1.0" 
+            prefix="wf"/>
+    </imports>
+
+    <!-- Introduction of new namespaces defined by this model -->
+    <namespaces>
+        <namespace uri="http://www.pennuited.com/wfmodel/pennunited/1.0"
+            prefix="putwf" />
+    </namespaces>
+    
+     <constraints>
+   
+      <constraint name="putwf:productCodeList" type="LIST">
+         <title>Product Code List</title>
+         <parameter name="allowedValues">
+            <list>
+               <value></value>
+               <value>CPM</value>
+               <value>CPMASY</value>
+               <value>HVGSIC</value>
+               <value>HVGTC</value>
+               <value>LVGSIC</value>
+               <value>LVGTC</value>
+               <value>NSR</value>
+               <value>PRECOB</value>
+               <value>PRENIC</value>
+               <value>PREPRS</value>
+               <value>PRESIC</value>
+            </list>
+         </parameter>
+         <parameter name="caseSensitive"><value>true</value></parameter>
+      </constraint>
+    </constraints>
+<types>
+	<type name="putwf:startCPMPennUnitedWF">
+         <parent>bpm:startTask</parent>
+         <overrides>
+            <property name="bpm:priority">
+                <default>3</default>
+            </property>
+            <property name="bpm:workflowPriority">
+                <default>3</default>
+            </property>
+         </overrides>
+         <mandatory-aspects>
+            <aspect>putwf:productCodeInfo</aspect>
+         </mandatory-aspects>
+      </type> 
+     
+       <type name="putwf:CPMOperationsResubmit">
+         <parent>putwf:basePennUnitedWF</parent>
+         <properties>
+             <property name="putwf:CPMoperationsOutcome">
+                 <type>d:text</type>
+                 <default>CPM Work Order Updated and Resubmitted</default>
+                 <constraints>
+                     <constraint name="putwf:CPMoperationsOutcomeOptions" type="LIST">
+                         <parameter name="allowedValues">
+                             <list>
+                                 <value>Work Order Updated and Resubmitted</value>
+                             </list>
+                         </parameter>
+                     </constraint>
+                 </constraints>
+             </property>
+         </properties>
+        <overrides>
+            <property name="bpm:outcomePropertyName">
+                <default>{http://www.formtek.com/wfmodel/pennunited/1.0}CPMoperationsOutcome</default>
+            </property>
+        </overrides>
+      </type>   
+      
+       <type name="putwf:CPMOrdermaterial">
+         <parent>putwf:basePennUnitedWF</parent>
+         <properties>
+             <property name="putwf:CPMorderMaterialOutcome">
+                 <type>d:text</type>
+                 <default>Material Ordered</default>
+                 <constraints>
+                     <constraint name="putwf:CPMorderMaterialOutcomeOptions" type="LIST">
+                         <parameter name="allowedValues">
+                             <list>
+                                 <value>Return to Operations</value>
+                                 <value>Material Ordered</value>
+                             </list>
+                         </parameter>
+                     </constraint>
+                 </constraints>
+             </property>
+         </properties>
+        <overrides>
+            <property name="bpm:outcomePropertyName">
+                <default>{http://www.formtek.com/wfmodel/pennunited/1.0}CPMorderMaterialOutcome</default>
+            </property>
+        </overrides>
+      </type> 
+      
+       <type name="putwf:CPMPackingSlipCreation">
+         <parent>putwf:basePennUnitedWF</parent>
+         <properties>
+             <property name="putwf:CPMpackingSlipCreationOutcome">
+                 <type>d:text</type>
+                 <default>Route to Issue Material to Manufacturing</default>
+                 <constraints>
+                     <constraint name="putwf:CPMpackingSlipCreationOutcomeOptions" type="LIST">
+                         <parameter name="allowedValues">
+                             <list>
+                                 <value>Return to Order Material</value>
+                                 <value>End Workflow</value>
+                             </list>
+                         </parameter>
+                     </constraint>
+                 </constraints>
+             </property>
+         </properties>
+        <overrides>
+            <property name="bpm:outcomePropertyName">
+                <default>{http://www.formtek.com/wfmodel/pennunited/1.0}CPMpackingSlipCreationOutcome</default>
+            </property>
+        </overrides>
+      </type>
+      
+       <type name="putwf:CPMissueMaterial">
+         <parent>putwf:basePennUnitedWF</parent>
+         <properties>
+             <property name="putwf:CPMissueMaterialOutcome">
+                 <type>d:text</type>
+                 <default>Material Issued to Manufacturing</default>
+                 <constraints>
+                     <constraint name="putwf:CPMissueMaterialOutcomeOptions" type="LIST">
+                         <parameter name="allowedValues">
+                             <list>
+                                 <value>Return to Operations</value>
+                                 <value>Material Issued to Manufacturing</value>
+                             </list>
+                         </parameter>
+                     </constraint>
+                 </constraints>
+             </property>
+         </properties>
+        <overrides>
+            <property name="bpm:outcomePropertyName">
+                <default>{http://www.formtek.com/wfmodel/pennunited/1.0}CPMissueMaterialOutcome</default>
+            </property>
+        </overrides>
+      </type> 
+    </types>
+    
+    <aspects>
+      <aspect name="putwf:workflowInfo">
+         <title>Work Order Traveller Workflow Info</title>
+         <properties>
+            <property name="putwf:id">
+               <title>Workflow ID</title>
+               <type>d:text</type> 
+            </property>
+            <property name="putwf:workflowname">
+               <title>Workflow Name</title>
+               <type>d:text</type> 
+            </property>
+            <property name="putwf:initiator">
+               <title>Initiator</title>
+               <type>d:text</type> 
+            </property>
+            <property name="putwf:startDate">
+               <title>Workflow Start Date</title>
+               <type>d:datetime</type>
+               <index enabled="true">
+                  <atomic>true</atomic>
+                  <stored>false</stored> 
+                  <tokenised>both</tokenised>
+               </index>
+            </property>
+            <property name="putwf:endDate">
+               <title>Workflow End Date</title>
+               <type>d:datetime</type>
+               <index enabled="true">
+                  <atomic>true</atomic>
+                  <stored>false</stored> 
+                  <tokenised>both</tokenised>
+               </index>
+            </property>
+            <property name="putwf:engResult">
+               <title>Redraw Engineering Result</title>
+               <type>d:text</type> 
+            </property>
+         </properties>
+      </aspect>
+
+      <aspect name="putwf:productCodeInfo">
+         <title>Product Code Info</title>
+         <properties>          
+             <property name="putwf:productCode">
+                 <type>d:text</type>
+                 <default></default>
+	         <constraints>
+                    <constraint ref="putwf:productCodeList" />
+                 </constraints>
+             </property>
+         </properties>
+      </aspect>
+
+    </aspects>
+
+
+</model>
